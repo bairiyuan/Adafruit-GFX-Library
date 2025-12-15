@@ -410,6 +410,18 @@ void Adafruit_GFX::drawEllipse(int16_t x1, int16_t y1, int16_t x2, int16_t y2, i
     endWrite();
 }
 
+void Adafruit_GFX::drawArc(int16_t x0, int16_t y0, int16_t r, int16_t start, int16_t end, uint16_t color) {
+    if (end < start) { int16_t t = start; start = end; end = t; }
+    int16_t px = x0 + (int16_t)(r * cos(PI / 180.0 * start));
+    int16_t py = y0 + (int16_t)(r * sin(PI / 180.0 * start));
+    for (int16_t a = start + 1; a <= end; a++) {
+        int16_t x = x0 + (int16_t)(r * cos(PI / 180.0 * a));
+        int16_t y = y0 + (int16_t)(r * sin(PI / 180.0 * a));
+        drawLine(px, py, x, y, color);
+        px = x;
+        py = y;
+    }
+}
 
 // Draw a triangle
 void Adafruit_GFX::drawTriangle(int16_t x0, int16_t y0,
